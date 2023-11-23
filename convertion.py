@@ -21,14 +21,16 @@ def convertion(personnes, output):
         # Write the constraints
         nb_constraints = 0
         f.write("Subject To\n")
-        # This type of constraint : forall {j in 1..N, i in 1..N: i != j} (x[i] + x[j] <= 1) -> (i, j) in Links
+        # This type of constraint : forall {j in 1..N, i in 1..N: i != j} (x[i] + x[j] <= 1) -> (i, j) out of E
         for personne in personnes:
-            for relation in personne.relations:
-                if personne.id < relation.id:
-                    f.write("    c%d: x%d + x%d <= 1\n" % (nb_constraints, personne.id, relation.id))
-                    nb_constraints += 1
+            for personne2 in personnes:
+                if personne.id != personne2.id:
+                    # We will write the constraint only if the two people are not friends
+                    if not personne.is_friend(personne2):
+                        f.write("    c%d: x%d + x%d <= 1\n" % (nb_constraints, personne.id, personne2.id))
+                        nb_constraints += 1
+
         # For the constraint we will write a c : at each new line
-        nb_constraints = 0
         # TODO
         # Write the binaries variables
         f.write("Binaries\n")

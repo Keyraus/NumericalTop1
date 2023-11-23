@@ -15,3 +15,9 @@ class Personne:
         for relation in self.relations:
             string += "%d " % relation.id
         return string
+    
+    def is_friend(self, personne):
+        for relation in self.relations:
+            if relation.id == personne.id:
+                return True
+        return False
