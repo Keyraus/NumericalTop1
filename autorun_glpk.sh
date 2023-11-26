@@ -1,3 +1,4 @@
+#!/bin/bash
 # For each file in ./Instances/small-lp, run the glpsol solver
 fList=()
 outList=()
