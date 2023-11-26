@@ -27,6 +27,7 @@ def convertion(personnes, output):
                 if personne.id != personne2.id:
                     # We will write the constraint only if the two people are not friends
                     if not personne.is_friend(personne2):
+                        if personne.id < personne2.id:
                         f.write("    c%d: x%d + x%d <= 1\n" % (nb_constraints, personne.id, personne2.id))
                         nb_constraints += 1
 
