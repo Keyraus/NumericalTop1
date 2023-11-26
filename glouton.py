@@ -17,10 +17,10 @@ def glouton(personnes):
     score = 0
     for i in S:
         score += i.weight
-        line = "Personne %d (%d) (%d) : [" % (i.id, i.weight, len(i.relations))
-        for relation in i.relations:
-            line += "%d, " % relation.id
-        line += "]"
+        line = "Personne %d (%d) (%d)" % (i.id, i.weight, len(i.relations))
+        #for relation in i.relations:
+        #    line += "%d, " % relation.id
+        #line += "]"
         print(line)
     # Print the score
     print("Score : %d" % score)
@@ -32,28 +32,52 @@ def heuristic(C, S):
     # Return -1 if there is no personne to invite
     max = -1
     index = -1
-    for i in range(len(C)):
-        personne = C[i]
-        # Check if the personne is already invited
-        if personne.invited:
-            continue
+    print(S)
+    for C_i in C:
         # Check if the personne knows everyone in S
         # If yes, we can invite him
         # If no, we can't invite him
         canInvite = True
-        for j in range(len(S)):
-            personne2 = S[j]
-            if not personne.is_friend(personne2):
+        for S_j in S:
+            #if Ci is 8 or 120 print the id of the personne in S
+           # if C_i.id == 8 or C_i.id == 120 or C_i.id == 85 or C_i.id == 161:
+               # print(C_i.id, S_j.id)
+               # print(C_i.is_friend(S_j))
+            if not C_i.is_friend(S_j):
                 canInvite = False
                 break
         if not canInvite:
             continue
-        # Compute the value of the personne
-        value = C[i].weight * len(C[i].relations)
+        # Compute the value of the personne in C with the personnes in S
+        #the value of C_i is the sum of the weight of the relations of C_i that know everyone the first element in S
+        value = C_i.weight
+        value2 = 0
+        for relation in C_i.relations:
+            #check if the relation know the first element in S
+            for S_j in S:
+                if relation.is_friend(S_j):
+                    #set the value to the higher wieght of the relation
+                    if relation.weight > value2:
+                        value2 = relation.weight
+                        #mulitplie the value 2 by the number of relations that relation has with S_j
+                        value2 *= len(relation.relations)
+                        value3 = 0
+                        for relation2 in relation.relations:
+                            #check if the relation know the first element in S
+                            for S_j in S:
+                                if relation2.is_friend(S_j):
+                                    #set the value to the higher wieght of the relation
+                                    if relation2.weight > value3:
+                                        value3 = relation.weight
+                        value2 *= value3
+        
+        value += value2  / 100000
+        
         # Check if the value is higher than the max
         if value > max:
             max = value
-            index = i
+            #return the incex of the personne in C
+            index = np.where(C == C_i)[0][0]
     return index
     
 def update(C, i):
