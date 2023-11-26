@@ -22,8 +22,8 @@ do
     for file in "$dir"/*.lp
     do
         fList+=(${file})
-        outList+=("./Instances/small-lp/solutions/$(basename $file .lp).out")
-        logList+=("./Instances/small-lp/solutions/$(basename $file .lp).glplog")
+        outList+=("$dir/solutions/$(basename $file .lp).out")
+        logList+=("$dir/solutions/$(basename $file .lp).glplog")
     done
 done
 
