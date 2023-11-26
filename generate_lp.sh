@@ -18,7 +18,7 @@ do
     for file in "$dir"/*.txt
     do
         fList+=(${file})
-        outList+=("$dir/solutions/$(basename $file .txt).lp")
+        outList+=("$dir/$(basename $file .txt).lp")
     done
 done
 
