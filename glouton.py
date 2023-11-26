@@ -5,6 +5,11 @@ from personne_parser import parse
 def glouton(personnes):
     C = np.array(personnes)
     S = np.array([])
+    #print the persones : 178, 101, 218, 223, 269
+    for i in C:
+        if i.id == 178 or i.id == 101 or i.id == 218 or i.id == 223 or i.id == 269:
+            print(i.id, i.weight, len(i.relations))
+
     while len(C) > 0:
         i = heuristic(C, S)
         if i == -1:
@@ -50,29 +55,7 @@ def heuristic(C, S):
             continue
         # Compute the value of the personne in C with the personnes in S
         #the value of C_i is the sum of the weight of the relations of C_i that know everyone the first element in S
-        value = C_i.weight
-        value2 = 0
-        for relation in C_i.relations:
-            #check if the relation know the first element in S
-            for S_j in S:
-                if relation.is_friend(S_j):
-                    #set the value to the higher wieght of the relation
-                    if relation.weight > value2:
-                        value2 = relation.weight
-                        #mulitplie the value 2 by the number of relations that relation has with S_j
-                        value2 *= len(relation.relations)
-                        value3 = 0
-                        for relation2 in relation.relations:
-                            #check if the relation know the first element in S
-                            for S_j in S:
-                                if relation2.is_friend(S_j):
-                                    #set the value to the higher wieght of the relation
-                                    if relation2.weight > value3:
-                                        value3 = relation.weight
-                        value2 *= value3
-        
-        value += value2  / 100000
-        
+        value = C_i.weight * len(C_i.relations)
         # Check if the value is higher than the max
         if value > max:
             max = value
