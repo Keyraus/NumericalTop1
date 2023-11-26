@@ -15,8 +15,6 @@ def glouton(personnes):
             break
         S = np.append(S, C[i])
         C = np.delete(C, i)
-        for j in C:
-            j.remove_relation(C[i])
 
     score = 0
     for i in S:
