@@ -19,7 +19,7 @@ do
     mkdir -p "$dir"/solutions
 
     # Iterates threw all files in the repertory
-    for file in "$dir"*.lp
+    for file in "$dir"/*.lp
     do
         fList+=(${file})
         outList+=("$dir/solutions/$(basename $file .lp).out")
