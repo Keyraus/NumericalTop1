@@ -12,14 +12,15 @@ def main():
                 result = line.split("Objective:  z = ")[1].split(" ")[0]
                 break
     # Print the result
+    C = parse(sys.argv[1])
     print("Resulat attendu", result)
-    score = glouton.glouton(parse(sys.argv[1]))
+    score = glouton.glouton(C.copy())
 
     gap = (int(result) - score) / int(result)
     print("Gap : %f" % gap)
 
-    #score2 = ag.intialisation_population(parse(sys.argv[1]), 1000)
-    #print("Score2 : %d" % np.mean(score2))
-
+    # Run the genetic algorithm
+    
+    ag.ag(C.copy(), 0.8,2/len(C), 400, 100, 50)
 if __name__ == "__main__":
     main()
