@@ -1,0 +1,74 @@
+GLPSOL--GLPK LP/MIP Solver 5.0
+Parameter(s) specified in the command line:
+ --lp ./Instances/larges/optimizedlarge10.lp -o ./Instances/larges/solutions/optimizedlarge10.out
+ --log ./Instances/larges/solutions/optimizedlarge10.glplog
+Reading problem data from './Instances/larges/optimizedlarge10.lp'...
+883 rows, 900 columns, 34825 non-zeros
+900 integer variables, all of which are binary
+1788 lines were read
+GLPK Integer Optimizer 5.0
+883 rows, 900 columns, 34825 non-zeros
+900 integer variables, all of which are binary
+Preprocessing...
+883 rows, 900 columns, 34825 non-zeros
+900 integer variables, all of which are binary
+Scaling...
+ A: min|aij| =  1.000e+00  max|aij| =  1.300e+02  ratio =  1.300e+02
+GM: min|aij| =  8.926e-02  max|aij| =  1.120e+01  ratio =  1.255e+02
+EQ: min|aij| =  8.161e-03  max|aij| =  1.000e+00  ratio =  1.225e+02
+2N: min|aij| =  7.812e-03  max|aij| =  1.625e+00  ratio =  2.080e+02
+Constructing initial basis...
+Size of triangular part is 883
+Solving LP relaxation...
+GLPK Simplex Optimizer 5.0
+883 rows, 900 columns, 34825 non-zeros
+*     0: obj =  -0.000000000e+00 inf =   0.000e+00 (900)
+*   769: obj =   5.478429650e+03 inf =   0.000e+00 (0) 4
+OPTIMAL LP SOLUTION FOUND
+Integer optimization begins...
+Long-step dual simplex will be used
++   769: mip =     not found yet <=              +inf        (1; 0)
++   858: mip =     not found yet <=   5.426000000e+03        (40; 0)
++  1012: mip =     not found yet <=   5.426000000e+03        (78; 0)
++  1202: mip =     not found yet <=   5.426000000e+03        (117; 0)
++  1394: mip =     not found yet <=   5.426000000e+03        (157; 0)
++  1571: mip =     not found yet <=   5.426000000e+03        (199; 0)
++  1756: mip =     not found yet <=   5.426000000e+03        (250; 0)
++  1939: mip =     not found yet <=   5.426000000e+03        (320; 0)
++  2010: >>>>>   5.460000000e+02 <=   5.426000000e+03 893.8% (358; 0)
++  2145: mip =   5.460000000e+02 <=   5.423000000e+03 893.2% (394; 3)
++  2318: mip =   5.460000000e+02 <=   5.423000000e+03 893.2% (432; 3)
++  2535: mip =   5.460000000e+02 <=   5.423000000e+03 893.2% (470; 3)
++  2740: mip =   5.460000000e+02 <=   5.423000000e+03 893.2% (511; 3)
+Time used: 60.0 secs.  Memory used: 6.6 Mb.
++  2963: mip =   5.460000000e+02 <=   5.423000000e+03 893.2% (559; 3)
++  3102: mip =   5.460000000e+02 <=   5.423000000e+03 893.2% (620; 3)
++  3225: >>>>>   5.550000000e+02 <=   5.423000000e+03 877.1% (678; 3)
++  3362: mip =   5.550000000e+02 <=   5.420000000e+03 876.6% (710; 14)
++  3460: mip =   5.550000000e+02 <=   5.420000000e+03 876.6% (749; 14)
++  3636: mip =   5.550000000e+02 <=   5.420000000e+03 876.6% (787; 14)
++  3937: mip =   5.550000000e+02 <=   5.420000000e+03 876.6% (826; 14)
++  4080: mip =   5.550000000e+02 <=   5.420000000e+03 876.6% (872; 14)
++  4222: mip =   5.550000000e+02 <=   5.420000000e+03 876.6% (925; 14)
++  4552: mip =   5.550000000e+02 <=   5.417000000e+03 876.0% (1005; 15)
++  4627: mip =   5.550000000e+02 <=   5.417000000e+03 876.0% (1042; 15)
++  4742: mip =   5.550000000e+02 <=   5.417000000e+03 876.0% (1079; 15)
+Time used: 120.1 secs.  Memory used: 6.9 Mb.
++  4920: mip =   5.550000000e+02 <=   5.417000000e+03 876.0% (1117; 15)
++  5090: mip =   5.550000000e+02 <=   5.417000000e+03 876.0% (1158; 15)
++  5271: mip =   5.550000000e+02 <=   5.417000000e+03 876.0% (1204; 15)
++  5425: mip =   5.550000000e+02 <=   5.417000000e+03 876.0% (1266; 15)
++  5646: mip =   5.550000000e+02 <=   5.413000000e+03 875.3% (1330; 16)
++  5751: mip =   5.550000000e+02 <=   5.413000000e+03 875.3% (1369; 16)
++  5928: mip =   5.550000000e+02 <=   5.413000000e+03 875.3% (1407; 16)
++  6099: mip =   5.550000000e+02 <=   5.413000000e+03 875.3% (1446; 16)
++  6376: mip =   5.550000000e+02 <=   5.413000000e+03 875.3% (1490; 16)
++  6510: mip =   5.550000000e+02 <=   5.413000000e+03 875.3% (1544; 16)
++  6763: mip =   5.550000000e+02 <=   5.413000000e+03 875.3% (1620; 16)
++  6917: mip =   5.550000000e+02 <=   5.405000000e+03 873.9% (1670; 17)
+Time used: 180.2 secs.  Memory used: 7.3 Mb.
++  7024: mip =   5.550000000e+02 <=   5.405000000e+03 873.9% (1708; 17)
++  7175: mip =   5.550000000e+02 <=   5.405000000e+03 873.9% (1747; 17)
++  7349: mip =   5.550000000e+02 <=   5.405000000e+03 873.9% (1788; 17)
++  7479: mip =   5.550000000e+02 <=   5.405000000e+03 873.9% (1832; 17)
++  7644: mip =   5.550000000e+02 <=   5.405000000e+03 873.9% (1880; 17)
