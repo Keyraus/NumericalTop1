@@ -1,0 +1,6 @@
+Problem:
+Rows:       29724
+Columns:    300 (300 integer, 300 binary)
+Non-zeros:  59448
+Status:     INTEGER OPTIMAL
+Objective:  z = 91 (MAXimum)
