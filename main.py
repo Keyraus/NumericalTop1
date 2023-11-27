@@ -2,6 +2,8 @@ import glouton
 import os
 import sys
 from personne_parser import parse
+import numpy as np
+import algo_genetique as ag
 
 def main():
     with open(sys.argv[2], 'r') as f:
@@ -15,6 +17,9 @@ def main():
 
     gap = (int(result) - score) / int(result)
     print("Gap : %f" % gap)
+
+    #score2 = ag.intialisation_population(parse(sys.argv[1]), 1000)
+    #print("Score2 : %d" % np.mean(score2))
 
 if __name__ == "__main__":
     main()
