@@ -5,6 +5,7 @@ import time
 from personne_parser import parse
 import numpy as np
 import algo_genetique as ag
+import Runner
 
 def main():
     if len(sys.argv) != 3:
@@ -19,12 +20,24 @@ def main():
             if "Objective:  z =" in line:
                 result = line.split("Objective:  z = ")[1].split(" ")[0]
                 break
-    chosenOption = input("Choisissez l'option :\n1. Glouton\n2. Algo génétique\n3. Bron-Kerbosch\n4. Tous\n")
+    arrayOfPossible = [
+        "1. Glouton",
+        "2. Algo génétique",
+        "3. Bron-Kerbosch",
+        "4. Bron-Kerbosch Optimisé",
+        "5. Tous"
+    ]
+    runner = Runner.Runner()
+    Instance = parse(sys.argv[1])
+    print("Choisissez une option :")
+    for option in arrayOfPossible:
+        print(option)
+    chosenOption = input("Votre choix : ")
     print("Option choisie : %s" % chosenOption)
     print("Résultat de l'instance GLPK : %s" % result)
     actualTime = time.time()
     if chosenOption == "1":
-        score = glouton.glouton(parse(sys.argv[1]))
+        score = runner.glouton(Instance.copy())
         print("Score : %d" % score)
     elif chosenOption == "2":
         print("ToDo")
@@ -39,28 +52,15 @@ def main():
         #score2 = ag.intialisation_population(parse(sys.argv[1]), 1000)
         #print("Score2 : %d" % np.mean(score2))
         
-        # all_clique = glouton.find_all_cliques(possible_node_to_append_to_the_clique=parse(sys.argv[1]))
-        # print("Nombre de clique : %d" % len(all_clique))
-        # best_clique = max(all_clique, key=lambda x: sum([i.weight for i in x]))
-        # print([person.id for person in best_clique])
-        # score = sum([i.weight for i in best_clique])
-        # print("Poids de la clique : %d" % score)
-
-        max_clique = glouton.find_maximum_clique(possible_node_to_append_to_the_clique=parse(sys.argv[1]))
-        print([person.id for person in max_clique])
-        score = sum([i.weight for i in max_clique])
-        print("Poids de la clique : %d" % score)
+        score = runner.BronKerbosch(Instance.copy())
 
     elif chosenOption == "4":
-        score = glouton.glouton(parse(sys.argv[1]))
-        print("Score : %d" % score)
-        score2 = ag.intialisation_population(parse(sys.argv[1]), 1000)
-        print("Score2 : %d" % np.mean(score2))
-        all_clique = glouton.find_all_cliques(possible_node_to_append=parse(sys.argv[1]))
-        print("Nombre de clique : %d" % len(all_clique))
-        best_clique = max(all_clique, key=lambda x: sum([i.weight for i in x]))
-        print(person.id for person in best_clique)
-        print("Poids de la clique : %d" % sum([i.weight for i in best_clique]))
+        score = runner.BronKerboschOpti(Instance.copy())
+
+    elif chosenOption == "5":
+        score = runner.glouton(Instance.copy())
+        score = runner.BronKerbosch(Instance.copy())
+        score = runner.BronKerboschOpti(Instance.copy())
     else:
         print("Option invalide")
     # print the gap
