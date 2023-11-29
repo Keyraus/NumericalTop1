@@ -20,7 +20,11 @@ def main():
     print("Gap : %f" % gap)
 
     # Run the genetic algorithm
+    C = parse(sys.argv[1])
+    score = ag.ag(sys.argv[1], 0.8,2/len(C), 400, 100, 50)
+    print("Score AG: %d" % score )
+
+
     
-    ag.ag(C.copy(), 0.8,2/len(C), 400, 100, 50)
 if __name__ == "__main__":
     main()

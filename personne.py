@@ -5,6 +5,7 @@ class Personne:
         self.weight = int(weight)
         self.relations = []
         self.invited = False
+        self.reparation = 0
 
     def add_relation(self, relation):
         self.relations.append(relation)
