@@ -14,12 +14,11 @@ def main():
     dict = parse(sys.argv[1])
 
     print("Resulat attendu", result)
-    score = glouton.gloutonVTest(dict)
+
     stest = glouton.gloutonVTest(dict, 1)
     print(np.nonzero(stest)[0])
     #print all the raltions of 15 with their wieght
-    for relation in dict[85].relations:
-        print(relation.id)#, relation.weight, relation.weight * len(dict[relation.id].relations))
+    exit()
     print("Score glouton : %d" % score )
     exit()
     gap = (int(result) - score) / int(result)

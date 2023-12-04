@@ -155,75 +155,41 @@ def gloutonV2(dict,gen = False, IsRandom = False):
 
 
 def heuristicV2(dict, S):
+    #TODO add random
+    print("S: ", np.nonzero(S)[0])
     max = -1
     index = -1
     first_index = np.nonzero(S)[0][0]
-
     for personne in dict[first_index].relations:
-        
         if S[personne.id] == 1:
             continue
 
         value = personne.weight * len(dict[personne.id].relations)
         #print(personne.id, "value: ", value )
-
+        if personne.id == 295 or personne.id == 161:
+            print(personne.id, value)
         if value > max:
             for invited in np.nonzero(S)[0]:
                 if not dict[invited].is_friend(personne):
                     break
+                else :
+                    if personne.id == 295 or personne.id == 161:
+                        print(personne.id, "invited: ", invited)
             else:
                 max = value
                 index = personne.id
     return index
-    
-
-"""def heuristicV2.1(C, S):
-for relation in S[0].relations:
-        if relation not in S:
-            #find relation in C
-            
-            value = relation.weight * len(C[relation.id].relations)
-            if value > max:
-                is_invited = True
-                for invited2 in S:
-                    if invited2.id == relation.id:
-                        continue
-                    if(not invited2.is_friend(relation)):
-                        is_invited = False
-                        break 
-                if is_invited:
-                    max = value
-                    index = relation.id
-    print("index return: ", index)
-    return index"""
-    
 
 def gloutonVTest(dict,gen = False, IsRandom = False):
-
     list_personnes = [i for i in range(len(dict))]
     S = [0 for _ in list_personnes]
     S[8] = 1
-    S[15] = 1
-    S[161] = 1
-    S[196] = 1
     list_personnes.remove(8)
-    list_personnes.remove(15)
-    list_personnes.remove(161)
-    list_personnes.remove(196)
-
+    print("Sdebutgloutn: ", np.nonzero(S)[0])
     #init S with the person with the higher weight_heur
     max_weight = 0
     index = 0
-    if IsRandom:
-        index = np.random.randint(0, len(list_personnes))
-    else:
-        for personne in list_personnes:
-            if dict[personne].weight_heur > max_weight:
-                max_weight = dict[personne].weight_heur
-                index = personne
 
-    S[index] = 1
-    list_personnes.remove(index)
 
     while len(list_personnes) > 0:
         i = heuristicV2(dict, S)
