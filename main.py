@@ -1,10 +1,9 @@
 import glouton
-import os
 import sys
 from personne_parser import parse
-import numpy as np
 import algo_genetique as ag
-
+import copy
+import numpy as np
 def main():
     with open(sys.argv[2], 'r') as f:
         for line in f:
@@ -12,16 +11,23 @@ def main():
                 result = line.split("Objective:  z = ")[1].split(" ")[0]
                 break
     # Print the result
-    C = parse(sys.argv[1])
-    print("Resulat attendu", result)
-    score = glouton.glouton(C.copy())
+    dict = parse(sys.argv[1])
 
+    print("Resulat attendu", result)
+    score = glouton.gloutonVTest(dict)
+    stest = glouton.gloutonVTest(dict, 1)
+    print(np.nonzero(stest)[0])
+    #print all the raltions of 15 with their wieght
+    for relation in dict[85].relations:
+        print(relation.id)#, relation.weight, relation.weight * len(dict[relation.id].relations))
+    print("Score glouton : %d" % score )
+    exit()
     gap = (int(result) - score) / int(result)
+    print("Score glouton : %d" % score )
     print("Gap : %f" % gap)
 
-    # Run the genetic algorithm
-    C = parse(sys.argv[1])
-    score = ag.ag(sys.argv[1], 0.8,2/len(C), 400, 100, 50)
+
+    score = ag.ag(dict, 0.8, 0.2, 400, 100, 500)
     print("Score AG: %d" % score )
 
 

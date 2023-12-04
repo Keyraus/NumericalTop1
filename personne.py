@@ -6,9 +6,13 @@ class Personne:
         self.relations = []
         self.invited = False
         self.reparation = 0
+        self.weight_heur = 0
 
-    def add_relation(self, relation):
-        self.relations.append(relation)
+    def add_relation(self, personne):
+        rel = relation(personne.id, personne.weight)
+        self.relations.append(rel)
+        self.weight_heur = self.weight * len(self.relations)
+
 
     def __str__(self):
         # display the person's id and weight and the list of relations
@@ -29,3 +33,14 @@ class Personne:
                 self.relations.remove(relation)
                 break
         return False
+    
+class relation:
+    def __init__(self, id, weight):
+        self.id = int(id)
+        self.weight = int(weight)
+    
+    def __str__(self):
+        return "Relation %d (%d)" % (self.id, self.weight)
+    
+    def __eq__(self, other):
+        return self.id == other.id
