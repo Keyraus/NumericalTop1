@@ -8,7 +8,7 @@ import algo_genetique as ag
 
 def main():
     if len(sys.argv) != 3:
-        print("Usage: python3 main.py instance.txt instance.lp")
+        print("Usage: python3 main.py instance.txt solution.txt")
         sys.exit(1)
     # check if the instance file exists
     if not os.path.exists(sys.argv[1]):

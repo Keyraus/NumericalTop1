@@ -7,11 +7,15 @@ def glouton(personnes):
     S = np.array([])
 
     while len(C) > 0:
-        i = heuristic(C, S)
+        i = heuristic(C)
         if i == -1:
             break
         S = np.append(S, C[i])
+
+        # Update C with valide elements
         C = np.delete(C, i)
+        acc = updateC(C, S)
+        C = np.delete(C, acc)
 
     score = 0
     for i in S:
@@ -20,22 +24,26 @@ def glouton(personnes):
         for relation in i.relations:
             line += " %d, " % relation.id
         line += "]"
-        print(line)
+        #print(line)
     print("\nScore : %d" % score)
     return score
 
-def heuristic(C, S):
+def updateC(C, S):
+    acc = []
+    for i , C_i in enumerate(C):
+        # Test C_i for all elements of S
+        for S_j in S:
+            # Try if C_i knows S_i
+            # if not found, remove from C
+            if not C_i.is_friend(S_j):
+                acc.append(i)
+                break
+    return acc
+
+def heuristic(C):
     max = -1
     index = -1
     for C_i in C:
-        canInvite = True
-        for S_j in S:
-            if not S_j.is_friend(C_i):
-                canInvite = False
-                break
-        if not canInvite:
-            continue
-
         value = C_i.weight * len(C_i.relations)
         if value > max:
             max = value
