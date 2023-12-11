@@ -4,6 +4,7 @@ from personne_parser import parse
 import algo_genetique as ag
 import copy
 import numpy as np
+import time
 def main():
     with open(sys.argv[2], 'r') as f:
         for line in f:
@@ -14,20 +15,17 @@ def main():
     dict = parse(sys.argv[1])
 
     print("Resulat attendu", result)
-
-    stest = glouton.gloutonV2(dict, 0, 1)
-    print(np.nonzero(stest)[0])
-    #print all the raltions of 15 with their wieght
-    #print("Score glouton : %d" % score )
-    #gap = (int(result) - score) / int(result)
-    #print("Score glouton : %d" % score )
-    #print("Gap : %f" % gap)
+    for _ in range(5):
+        start = time.time()
+        score = glouton.glouton(dict)
+        end = time.time()
+        print("Score glouton : %d" % score, "Time : %.2f" % (end - start) )
+        print("Gap : %.2f" % ((int(result) - score) / int(result)))
 
 
-    score = ag.ag(dict, 0.8, 0.2, 400, 100, 500)
-    print("Score AG: %d" % score )
-
-
+        score = ag.ag(dict, 0.8, 2/len(dict), 400, 100, 500)
+        print("Score AG: %d" % score )
+        print("Gap : %.2f" % ((int(result) - score) / int(result)))
     
 if __name__ == "__main__":
     main()

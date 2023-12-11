@@ -131,7 +131,7 @@ def gloutonV2(dict,gen = False, IsRandom = False):
     list_personnes.remove(index)
 
     while len(list_personnes) > 0:
-        i = heuristicV2(dict, S, IsRandom)
+        i = heuristicV2(dict, S, False)
         if i == -1:
             break
         
@@ -158,18 +158,16 @@ def gloutonV2(dict,gen = False, IsRandom = False):
 
 def heuristicV2(dict, S, random = False):
     if not random:
-        print("S: ", np.nonzero(S)[0])
         max = -1
         index = -1
         first_index = np.nonzero(S)[0][0]
         for personne in dict[first_index].relations:
+            
             if S[personne.id] == 1:
                 continue
-
+            
             value = personne.weight * len(dict[personne.id].relations)
-            #print(personne.id, "value: ", value )
-            if personne.id == 295 or personne.id == 161:
-                print(personne.id, value)
+
             if value > max:
                 for invited in np.nonzero(S)[0]:
                     if not dict[invited].is_friend(personne):
