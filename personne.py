@@ -22,10 +22,7 @@ class Personne:
         return string
     
     def is_friend(self, personne):
-        for relation in self.relations:
-            if relation.id == personne.id:
-                return True
-        return False
+        return personne.id in [relation.id for relation in self.relations]
     
     def remove_relation(self, personne):
         for relation in self.relations:
