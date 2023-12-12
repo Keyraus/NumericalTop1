@@ -149,7 +149,7 @@ def Reparation(dict, Croisement):
             tableauReparation[personne] = 0
     #print("Reparation étape 2")
     for solution in Croisement:
-        if np.nonzero(solution)[0].size == 0:
+        if not np.sum(solution):
             continue
         index = -2
         while index != -1:
@@ -175,10 +175,10 @@ def ReparationV2(dict, Croisement):
                     index = personne
             solution[index] = 0
             tableauReparation[index] = 0
+            tableauReparation = CalculScoreReparation(dict, solution)
     #print("Reparation étape 2")
     for solution in Croisement:
-        if np.nonzero(solution)[0].size == 0:
-            continue
+
         index = -2
         while index != -1:
             index = heuristicV2(dict, solution)

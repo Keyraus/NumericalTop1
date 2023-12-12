@@ -16,12 +16,12 @@ def main():
     dict = parse(sys.argv[1])
     print("Temps parse : ", time.time() - start)
     print("Resulat attendu", result)
+    start = time.time()
+    score = glouton.gloutonV2(dict)
+    end = time.time()
+    print("Score glouton : %d" % score, "Time : %.20f" % (end - start) )
+    print("Gap : %.2f" % ((int(result) - score) / int(result)))
     for _ in range(5):
-        start = time.time()
-        score = glouton.gloutonV2(dict)
-        end = time.time()
-        print("Score glouton : %d" % score, "Time : %.20f" % (end - start) )
-        print("Gap : %.2f" % ((int(result) - score) / int(result)))
 
         score = ag.ag(dict, 0.8, 2/len(dict), 400, 100, 500)
         print("Score AG: %d" % score )
