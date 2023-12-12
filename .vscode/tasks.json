@@ -3,9 +3,9 @@
     "tasks": [
         {
             "type": "austin",
-            "file": "tp_basecode.py",
-            "args": ["--verbose"],
-            "label": "Profile tp_basecode.py",
+            "file": "main.py",
+            "args": [".\\Instances\\small\\instance1.txt", ".\\Solutions\\solution1.txt"],
+            "label": "Profile Project flamegraph",
         }
     ]
 }

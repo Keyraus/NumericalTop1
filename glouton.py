@@ -18,7 +18,7 @@ def glouton(personnes):
         score += i.weight
         line = "Personne %d (%d) (%d)" % (i.id, i.weight, len(i.relations))
         for relation in i.relations:
-            line += " %d, " % relation.id
+            line += " %d, " % relation
         line += "]"
         #print(line)
     #print("\nScore : %d" % score)
@@ -134,22 +134,13 @@ def gloutonV2(dict,gen = False, IsRandom = False):
         i = heuristicV2(dict, S, False)
         if i == -1:
             break
-        
         S[i] = 1
-        #print("S: ", np.nonzero(S)[0])
-        #print(list_personnes)
         list_personnes.remove(i)
 
     score = 0
-    #line = ""
-    for personne in dict:
-        if S[personne.id] == 1:
-            score += personne.weight
-            #line = "Personne %d (%d) (%d)" % (personne.id, personne.weight, len(personne.relations))
-        #for relation in dict[i].relations:
-        #    line += " %d, " % relation.id
-        #line += "]"
-        #print(line)
+
+    for i in np.nonzero(S)[0]:
+        score += dict[i].weight
     if gen:
         return S
     else :
@@ -162,11 +153,8 @@ def heuristicV2(dict, S, random = False):
         index = -1
         first_index = np.nonzero(S)[0][0]
         for personne in dict[first_index].relations:
-            
-            if S[personne.id] == 1:
-                continue
-            
-            value = personne.weight * len(dict[personne.id].relations)
+           
+            value = dict[personne].weight_heur *  (not S[personne])
 
             if value > max:
                 for invited in np.nonzero(S)[0]:
@@ -174,7 +162,7 @@ def heuristicV2(dict, S, random = False):
                         break
                 else:
                     max = value
-                    index = personne.id
+                    index = personne
         return index
     else:
         max = -1
@@ -186,7 +174,7 @@ def heuristicV2(dict, S, random = False):
         sumTotal = 0
 
         for personne in dict[first_index].relations:
-            if S[personne.id] == 1:
+            if S[personne] == 1:
                 continue
 
             for invited in np.nonzero(S)[0]:
@@ -194,11 +182,11 @@ def heuristicV2(dict, S, random = False):
                     break
             else:
 
-                sumTotal += personne.weight * len(dict[personne.id].relations)
-                people_array = np.append(people_array, int(personne.id))
+                sumTotal += dict[personne].weight * len(dict[personne].relations)
+                people_array = np.append(people_array, int(personne))
 
         for people in dict[first_index].relations:
-            people = dict[int(people.id)]
+            people = dict[int(people)]
             if people.id in people_array:
                 proba = people.weight_heur / sumTotal
                 proba_array = np.append(proba_array, total + proba)
