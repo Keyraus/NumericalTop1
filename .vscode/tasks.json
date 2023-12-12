@@ -1,0 +1,11 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "type": "austin",
+            "file": "tp_basecode.py",
+            "args": ["--verbose"],
+            "label": "Profile tp_basecode.py",
+        }
+    ]
+}
