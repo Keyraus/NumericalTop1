@@ -190,7 +190,15 @@ def ReparationV2(dict, Croisement):
 
 def CalculScoreReparation(dict, solution):
     len_nonzerosolution = np.count_nonzero(np.array(solution))
-    return [len_nonzerosolution - np.count_nonzero(np.logical_and(dict[personne].relations, solution)) - 1 if solution[personne] else 0 for personne in range(len(solution))]
+    len_solution = len(solution)
+    return [len_nonzerosolution - 
+            np.count_nonzero(
+                np.logical_and(
+                    dict[personne].relations,
+                    solution)) -
+            1 
+            if solution[personne] else 0 
+            for personne in range(len_solution)]
 
 
 
