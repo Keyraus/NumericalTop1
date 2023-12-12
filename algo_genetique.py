@@ -178,7 +178,8 @@ def ReparationV2(dict, Croisement):
             tableauReparation = CalculScoreReparation(dict, solution)
     #print("Reparation étape 2")
     for solution in Croisement:
-
+        if np.count_nonzero(np.array(solution)) == 0:
+            continue
         index = -2
         while index != -1:
             index = heuristicV2(dict, solution)
@@ -189,16 +190,13 @@ def ReparationV2(dict, Croisement):
 
 
 def CalculScoreReparation(dict, solution):
-    len_nonzerosolution = np.count_nonzero(np.array(solution))
-    len_solution = len(solution)
-    return [len_nonzerosolution - 
-            np.count_nonzero(
-                np.logical_and(
-                    dict[personne].relations,
-                    solution)) -
-            1 
-            if solution[personne] else 0 
-            for personne in range(len_solution)]
+    tableauReparation = [0 for _ in range(len(solution))]
+    validSolutions = np.nonzero(solution)[0]
+    for personne in validSolutions:
+        for personne2 in validSolutions:
+            if not dict[personne].relations[personne2]:
+                tableauReparation[personne] += 1
+    return tableauReparation
 
 
 
