@@ -153,12 +153,14 @@ def heuristicV2(dict, S, random = False):
         index = -1
         first_index = np.nonzero(S)[0][0]
         indexinsolution = np.nonzero(S)[0]
-        for personne in dict[first_index].relations:
-           
+        for personne in np.nonzero(dict[first_index].relations)[0]:
             value = dict[personne].weight_heur * (not S[personne])
 
             if value > max:
-                if not any(not dict[invited].is_friend(personne) for invited in indexinsolution):
+                for invited in indexinsolution:
+                    if not dict[invited].relations[personne]:
+                        break
+                else:
                     max = value
                     index = personne
         return index

@@ -187,20 +187,22 @@ def ReparationV2(dict, Croisement):
 
 
 def CalculScoreReparation(dict, solution):
+    nonzerosolution = np.nonzero(solution)[0]
     tableauReparation = [0 for _ in range(len(solution))]
-    for personne in np.nonzero(solution)[0]:
-        for personne2 in np.nonzero(solution)[0]:
+    for personne in nonzerosolution:
+        for personne2 in nonzerosolution:
             if personne != personne2:
-                if not dict[personne].is_friend(dict[personne2]):
+                if not dict[personne].relations[personne2]:
                     tableauReparation[personne] += 1
 
     return tableauReparation
 
 def isNotRealisable(dict, solution):
-    for personne in np.nonzero(solution)[0]:
-        for personne2 in np.nonzero(solution)[0]:
+    nonzerosolution = np.nonzero(solution)[0]
+    for personne in nonzerosolution:
+        for personne2 in nonzerosolution:
             if personne != personne2:
-                if not dict[personne].is_friend(dict[personne2]):
+                if not dict[personne].relations[personne2]:
                     return True
     return False
 

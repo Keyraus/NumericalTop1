@@ -6,24 +6,21 @@ class Personne:
         self.weight = int(weight)
         self.invited = False
         self.reparation = 0
-        self.weight_heur = self.weight
-        self.relations = [0 for _ in range(len_dict)]
+        self.weight_heur = 0
+        self.relations = [False for _ in range(len_dict)]
 
     def add_relation(self, personne):
         self.relations[personne.id] = True
-        self.weight_heur *= len(np.nonzero(self.relations)[0])
+        self.weight_heur = self.weight * len(np.nonzero(self.relations)[0])
 
 
     def __str__(self):
         # display the person's id and weight and the list of relations
         string = "Personne %d (%d) (%d) : " % (self.id, self.weight, len(self.relations))
         for relation in self.relations:
-            string += "%d " % relation.id
+            string += "%d " % relation
         return string
-    
-    def is_friend(self, personne):
-        return personne in self.relations
-    
+
     def remove_relation(self, personne):
         for relation in self.relations:
             if relation.id == personne.id:

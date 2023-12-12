@@ -16,4 +16,5 @@ def parse(file):
             id1, id2 = map(int, f.readline().split())
             personnes[id1].add_relation(personnes[id2])
             personnes[id2].add_relation(personnes[id1])
+
     return np.array(personnes)
