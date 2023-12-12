@@ -57,7 +57,7 @@ def gloutonRandomGen(personnes):
     #choose random person
     i = np.random.randint(0, len(C))
     
-    C[i].invited = True
+    C[i].invited = 1
     S = np.append(S, C[i])
     C = np.delete(C, i)
     
@@ -65,7 +65,7 @@ def gloutonRandomGen(personnes):
         i = heuristic(C, S)
         if i == -1:
             break
-        C[i].invited = True
+        C[i].invited = 1
         S = np.append(S, C[i])
         C = np.delete(C, i)
 
@@ -96,7 +96,7 @@ def gloutonGen(personnes):
         i = heuristic(C, S)
         if i == -1:
             break
-        C[i].invited = True
+        C[i].invited = 1
         S = np.append(S, C[i])
         C = np.delete(C, i)
 
