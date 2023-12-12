@@ -6,7 +6,7 @@ from glouton import heuristicV2
 def initialisation_population(dict, T):
     start = time.time()
     population = []
-    population.append(glouton.gloutonV2(dict, True, False))
+    population.append(glouton.gloutonV2(dict, True, 0))
     for _ in range(T - 1):
         res = glouton.gloutonV2(dict, True, True)
         population.append(res)
@@ -51,17 +51,15 @@ def ag(dict, ProbCroisement, ProbMutation, T, T_used, IterMax):
             for personne in nonzerosolution:
                 score += dict[personne].weight
             scores.append(score)
-
         #print("fbest : ", fbest, "fprimebest : ", fprimebest," temps : ", time.time() - start)
+    
         if fprimebest > fbest:
             print("nouveau fbest : ", fprimebest)
             fbest = fprimebest
 
         #print(scores)
         population = selectionSurvie(dict, population, T)
-        # recalcul mutation basé sur la diversité
-        # new_prob_mutation =  calculDiversité(len(dict), T, population, new_prob_mutation)
-        # print("Probabilité de mutation : ", new_prob_mutation)
+
     
     print("nb iteration : ", i)
     return np.max(scores)
@@ -147,7 +145,7 @@ def Reparation(dict, Croisement):
                     break
                 personne += 1
             personne = np.nonzero(tableauReparation)[0][personne]
-            solution[personne] = False
+            solution[personne] = 0
             tableauReparation[personne] = 0
     #print("Reparation étape 2")
     for solution in Croisement:
@@ -158,11 +156,11 @@ def Reparation(dict, Croisement):
             index = heuristicV2(dict, solution)
             if index == -1:
                 break
-            solution[index] = True
+            solution[index] = 1
 
     return Croisement
 
-# 
+
 def ReparationV2(dict, Croisement):
     #print("Réparation étape 1")
     for solution in Croisement:
@@ -175,9 +173,8 @@ def ReparationV2(dict, Croisement):
                 if valeur < min:
                     min = valeur
                     index = personne
-            solution[index] = False
+            solution[index] = 0
             tableauReparation[index] = 0
-
     #print("Reparation étape 2")
     for solution in Croisement:
         if np.nonzero(solution)[0].size == 0:
@@ -187,7 +184,7 @@ def ReparationV2(dict, Croisement):
             index = heuristicV2(dict, solution)
             if index == -1:
                 break
-            solution[index] = True
+            solution[index] = 1
     return Croisement
 
 
