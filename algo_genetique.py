@@ -165,15 +165,19 @@ def ReparationV2(dict, Croisement):
     #print("Réparation étape 1")
     for solution in Croisement:
         tableauReparation = CalculScoreReparation(dict, solution)
-        while np.sum(tableauReparation) > 0:
+        sumTabRep = np.sum(tableauReparation)
+        
+        while sumTabRep > 0:
             min = float("inf")
             index = -1
-            for personne in np.nonzero(tableauReparation)[0]:
+            nonZeroTabRep = np.nonzero(tableauReparation)[0]
+            for personne in nonZeroTabRep:
                 valeur = dict[personne].weight_heur / tableauReparation[personne]
                 if valeur < min:
                     min = valeur
                     index = personne
             solution[index] = 0
+            sumTabRep -= tableauReparation[index]
             tableauReparation[index] = 0
             tableauReparation = CalculScoreReparation(dict, solution)
     #print("Reparation étape 2")
