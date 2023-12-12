@@ -158,7 +158,10 @@ def heuristicV2(dict, S, random = False):
             value = dict[personne].weight_heur * (not S[personne])
 
             if value > max:
-                if all(dict[personne].is_friend(dict[invited]) for invited in indexinsolution):
+                for invited in indexinsolution:
+                    if not dict[invited].is_friend(personne):
+                        break
+                else:
                     max = value
                     index = personne
         return index
