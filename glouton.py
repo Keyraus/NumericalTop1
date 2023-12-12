@@ -151,9 +151,9 @@ def heuristicV2(dict, S, random = False):
     if not random:
         max = -1
         index = -1
-        first_index = np.nonzero(S)[0][0]
+        #first_index = np.nonzero(S)[0][0]
         indexinsolution = np.nonzero(S)[0]
-        for personne in np.nonzero(dict[first_index].relations)[0]:
+        for personne in np.nonzero(dict[indexinsolution[0]].relations)[0]:
             value = dict[personne].weight_heur * (not S[personne])
 
             if value > max:

@@ -165,19 +165,23 @@ def ReparationV2(dict, Croisement):
     #print("Réparation étape 1")
     for solution in Croisement:
         tableauReparation = CalculScoreReparation(dict, solution)
-        while np.sum(tableauReparation) > 0:
+        sumTabRep = np.sum(tableauReparation)
+        
+        while sumTabRep > 0:
             min = float("inf")
             index = -1
-            for personne in np.nonzero(tableauReparation)[0]:
+            nonZeroTabRep = np.nonzero(tableauReparation)[0]
+            for personne in nonZeroTabRep:
                 valeur = dict[personne].weight_heur / tableauReparation[personne]
                 if valeur < min:
                     min = valeur
                     index = personne
             solution[index] = 0
+            sumTabRep -= tableauReparation[index]
             tableauReparation[index] = 0
     #print("Reparation étape 2")
     for solution in Croisement:
-        if np.nonzero(solution)[0].size == 0:
+        if np.count_nonzero(np.array(solution)) == 0:
             continue
         index = -2
         while index != -1:
@@ -189,18 +193,13 @@ def ReparationV2(dict, Croisement):
 
 
 def CalculScoreReparation(dict, solution):
-    len_nonzerosolution = np.count_nonzero(np.array(solution))
-    len_solution = len(solution)
-    return [len_nonzerosolution - 
-            np.count_nonzero(
-                np.logical_and(
-                    dict[personne].relations,
-                    solution)) -
-            1 
-            if solution[personne] else 0 
-            for personne in range(len_solution)]
-
-
+    tableauReparation = [0 for _ in range(len(solution))]
+    validSolutions = np.nonzero(solution)[0]
+    for personne in validSolutions:
+        for personne2 in validSolutions:
+            if not dict[personne].relations[personne2]:
+                tableauReparation[personne] += 1
+    return tableauReparation
 
 def selectionSurvie(dict, population, T):
     class Solution:
