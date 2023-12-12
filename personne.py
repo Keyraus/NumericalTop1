@@ -11,8 +11,9 @@ class Personne:
 
     def add_relation(self, personne):
         self.relations[personne.id] = True
-        self.weight_heur = self.weight * len(np.nonzero(self.relations)[0])
 
+    def calculate_weight_heur(self):
+        self.weight_heur = self.weight * len(np.nonzero(self.relations)[0])
 
     def __str__(self):
         # display the person's id and weight and the list of relations

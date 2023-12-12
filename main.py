@@ -20,7 +20,7 @@ def main():
         start = time.time()
         score = glouton.gloutonV2(dict)
         end = time.time()
-        print("Score glouton : %d" % score, "Time : %.6f" % (end - start) )
+        print("Score glouton : %d" % score, "Time : %.20f" % (end - start) )
         print("Gap : %.2f" % ((int(result) - score) / int(result)))
 
         score = ag.ag(dict, 0.8, 2/len(dict), 400, 100, 500)
