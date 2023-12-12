@@ -113,10 +113,11 @@ def FuncCroisement(M, ProbCroisement):
     return Croisement
 
 def Mutation(Croisement, ProbMutation):
+    len_solution = len(Croisement[0])
     for solution in Croisement:
-        for i in range(len(solution)):
-            rand = np.random.random() % 1
-            if rand < ProbMutation:
+        rand = np.random.default_rng().uniform(low=0.0, high=1.0, size=len_solution)
+        for i,rnd in enumerate(rand):
+            if rnd < ProbMutation:
                 solution[i] = not solution[i]
     return Croisement
 
