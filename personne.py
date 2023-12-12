@@ -9,8 +9,7 @@ class Personne:
         self.weight_heur = 0
 
     def add_relation(self, personne):
-        rel = relation(personne.id, personne.weight)
-        self.relations.append(rel)
+        self.relations.append(personne.id)
         self.weight_heur = self.weight * len(self.relations)
 
 
@@ -22,10 +21,7 @@ class Personne:
         return string
     
     def is_friend(self, personne):
-        for relation in self.relations:
-            if relation.id == personne.id:
-                return True
-        return False
+        return personne in self.relations
     
     def remove_relation(self, personne):
         for relation in self.relations:

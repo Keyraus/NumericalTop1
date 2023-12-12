@@ -6,6 +6,7 @@ import copy
 import numpy as np
 import time
 def main():
+    start = time.time()
     with open(sys.argv[2], 'r') as f:
         for line in f:
             if "Objective:  z =" in line:
@@ -13,15 +14,14 @@ def main():
                 break
     # Print the result
     dict = parse(sys.argv[1])
-
+    print("Temps parse : ", time.time() - start)
     print("Resulat attendu", result)
     for _ in range(5):
         start = time.time()
-        score = glouton.glouton(dict)
+        score = glouton.gloutonV2(dict)
         end = time.time()
         print("Score glouton : %d" % score, "Time : %.2f" % (end - start) )
         print("Gap : %.2f" % ((int(result) - score) / int(result)))
-
 
         score = ag.ag(dict, 0.8, 2/len(dict), 400, 100, 500)
         print("Score AG: %d" % score )

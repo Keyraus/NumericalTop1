@@ -14,6 +14,7 @@ def initialisation_population(dict, T):
     return population
 
 def ag(dict, ProbCroisement, ProbMutation, T, T_used, IterMax):
+    start = time.time()
     new_prob_mutation = ProbMutation
     #print("Génération de la population...")
     population = initialisation_population(dict, T)
@@ -30,15 +31,13 @@ def ag(dict, ProbCroisement, ProbMutation, T, T_used, IterMax):
             fbest = score
     
     #init a time delta
-    start = time.time()
-
     for i in range(IterMax):
         #print("Iteration n°", i)
         
-        if time.time() - start > 60:
+        if time.time() - start > 10:
             break
         M = selectionReproduction(dict, population, T_used)
-        Croisement = FuncCroisement(M, new_prob_mutation)
+        Croisement = FuncCroisement(M, ProbCroisement)
         Croisement = Mutation(Croisement, new_prob_mutation)
         Croisement = ReparationV2(dict, Croisement)
         population = np.append(population, Croisement).reshape(-1, len(Croisement[0]))
@@ -62,7 +61,8 @@ def ag(dict, ProbCroisement, ProbMutation, T, T_used, IterMax):
         # recalcul mutation basé sur la diversité
         # new_prob_mutation =  calculDiversité(len(dict), T, population, new_prob_mutation)
         # print("Probabilité de mutation : ", new_prob_mutation)
-
+    
+    print("nb iteration : ", i)
     return np.max(scores)
 # 9 16 162 197
 def selectionReproduction(dict,population, T_used):
