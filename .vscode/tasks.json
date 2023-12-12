@@ -4,8 +4,12 @@
         {
             "type": "austin",
             "file": "main.py",
-            "args": [".\\Instances\\small\\instance1.txt", ".\\Solutions\\solution1.txt"],
+            "args": [
+                ".\\Instances\\small\\instance1.txt",
+                ".\\Solutions\\solution1.txt"
+            ],
             "label": "Profile Project flamegraph",
+            "problemMatcher": []
         }
     ]
 }
