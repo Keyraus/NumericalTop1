@@ -188,9 +188,9 @@ def ReparationV2(dict, Croisement):
 
 
 def CalculScoreReparation(dict, solution):
-    len_nonzerosolution = len(np.nonzero(solution)[0])
-    tableauReparation = [len_nonzerosolution - len(np.nonzero(np.logical_and(dict[personne].relations, solution))[0] ) - 1 if solution[personne] else 0 for personne in range(len(solution))]
-    return tableauReparation
+    len_nonzerosolution = np.count_nonzero(solution)
+    return [len_nonzerosolution - np.count_nonzero(np.logical_and(dict[personne].relations, solution)) - 1 if solution[personne] else 0 for personne in range(len(solution))]
+
 
 
 def selectionSurvie(dict, population, T):
