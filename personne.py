@@ -1,16 +1,16 @@
 # This class is intended to store the information of a person
 class Personne:
-    def __init__(self, id, weight):
+    def __init__(self, id, weight, len_dict):
         self.id = int(id)
         self.weight = int(weight)
-        self.relations = []
         self.invited = False
         self.reparation = 0
-        self.weight_heur = 0
+        self.weight_heur = self.weight
+        self.relations = [0 for _ in range(len_dict)]
 
     def add_relation(self, personne):
-        self.relations.append(personne.id)
-        self.weight_heur = self.weight * len(self.relations)
+        self.relations[personne.id] = True
+        self.weight_heur *= len(self.relations)
 
 
     def __str__(self):
