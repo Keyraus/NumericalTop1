@@ -5,11 +5,11 @@ from glouton import heuristicV2
 
 def initialisation_population(dict, T):
     start = time.time()
-    population = np.array([])
-    population = np.append(population, glouton.gloutonV2(dict, True, False)).reshape(-1, len(dict))
+    population = []
+    population.append(glouton.gloutonV2(dict, True, False))
     for _ in range(T - 1):
         res = glouton.gloutonV2(dict, True, True)
-        population = np.append(population, res).reshape(-1, len(res))
+        population.append(res)
     print("temps initialisation population : ", time.time() - start)
     return population
 
@@ -38,35 +38,32 @@ def ag(dict, ProbCroisement, ProbMutation, T, T_used, IterMax):
             break
         M = selectionReproduction(dict, population, T_used)
         Croisement = FuncCroisement(M, ProbCroisement)
+        
         Croisement = Mutation(Croisement, new_prob_mutation)
         Croisement = ReparationV2(dict, Croisement)
-        population = np.append(population, Croisement).reshape(-1, len(Croisement[0]))
+        population += Croisement
         fprimebest = 0
 
-        scores = np.array([])
+        scores = []
         for solution in population:
-            #sum wieght of each person in i
+            nonzersolution = np.nonzero(solution)[0]
             score = 0
-            for personne in np.nonzero(solution)[0]:
+            for personne in nonzersolution:
                 score += dict[personne].weight
-            scores = np.append(scores, score)
+            scores.append(score)
 
-        #print("fbest : ", fbest, "fprimebest : ", fprimebest," temps : ", time.time() - start)
         if fprimebest > fbest:
             print("nouveau fbest : ", fprimebest)
             fbest = fprimebest
 
-        #print(scores)
         population = selectionSurvie(dict, population, T)
-        # recalcul mutation basé sur la diversité
-        # new_prob_mutation =  calculDiversité(len(dict), T, population, new_prob_mutation)
-        # print("Probabilité de mutation : ", new_prob_mutation)
+
     
     print("nb iteration : ", i)
     return np.max(scores)
 # 9 16 162 197
 def selectionReproduction(dict,population, T_used):
-    M = np.array([])
+    M = []
     #calcul de la somme de tous les scores de la population
     sumTotal = 0
     for solution in population:
@@ -86,11 +83,11 @@ def selectionReproduction(dict,population, T_used):
         #calcul random pour savoir si solution prise ou pas 
         prise = np.random.randint(0, 1)
         if prise < proba_i:
-            M = np.append(M,solution).reshape(-1, len(solution))
+            M.append(solution)
     return M
 
 def FuncCroisement(M, ProbCroisement):
-    Croisement = np.array([])
+    Croisement = []
     while len(Croisement) < len(M):
         #calcul random pour savoir si solution prise ou pas 
         prise = np.random.randint(0, 1)
@@ -103,13 +100,12 @@ def FuncCroisement(M, ProbCroisement):
             j1 = j[:point_croisement]
             j2 = j[point_croisement:]
 
-            i = np.append(i1, j2)
-            j = np.append(j1, i2)
+            i1 = i1 + j2
+            j1 = j1 + i2
 
-        Croisement = np.append(Croisement, i).reshape(-1, len(i))
-        Croisement = np.append(Croisement, j).reshape(-1, len(j))
+        Croisement.append(i)
+        Croisement.append(j)
         
-    
     return Croisement
 
 def Mutation(Croisement, ProbMutation):
@@ -122,6 +118,7 @@ def Mutation(Croisement, ProbMutation):
     return Croisement
 
 def Reparation(dict, Croisement): 
+    
     #print("Réparation étape 1")
     for solution in Croisement:
         while isNotRealisable(dict, solution):
@@ -158,7 +155,8 @@ def Reparation(dict, Croisement):
     return Croisement
 
 # 
-def ReparationV2(dict, Croisement):
+def ReparationV2(dict, Croisement): 
+
     #print("Réparation étape 1")
     for solution in Croisement:
         while isNotRealisable(dict, solution):
@@ -214,23 +212,24 @@ def selectionSurvie(dict, population, T):
             self.score = score
 
     #creer un tableau de score taille T
-    maxScore = np.array([])
+    maxScore = []
     for sol_index in range(len(population)):
+        nonzeropop = np.nonzero(population[sol_index])[0]
         #sum wieght of each person in i
         score = 0
-        for personne in np.nonzero(population[sol_index])[0]:
+        for personne in nonzeropop:
             score += dict[personne].weight
         #find the solution index in population
-        maxScore = np.append(maxScore, Solution(population[sol_index], score))
+        maxScore.append(Solution(population[sol_index], score))
     
     maxScore = sorted(maxScore, key=lambda x: x.score, reverse=True)
     #garder les T meilleurs
     maxScore = maxScore[:T]
 
     #retourner les T meilleurs
-    population = np.array([])
+    population = []
     for i in maxScore:
-        population = np.append(population, i.solution).reshape(-1, len(i.solution))    
+        population.append(i.solution)
    # print(len(population), len(population[0]))
     return population
 
