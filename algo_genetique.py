@@ -21,15 +21,6 @@ def ag(dict, ProbCroisement, ProbMutation, T, T_used, IterMax):
     #calculer le score de chaque individu 
     fbest = 0
     
-    for solution in population:
-        #sum wieght of each person in i
-        score = 0
-        nonzerosolution = np.nonzero(solution)[0]
-        for personne in nonzerosolution:
-            score += dict[personne].weight
-        if score > fbest:
-            fbest = score
-    
     #init a time delta
     for i in range(IterMax):
         #print("Iteration n°", i)
@@ -55,7 +46,6 @@ def ag(dict, ProbCroisement, ProbMutation, T, T_used, IterMax):
         if fprimebest > fbest:
             print("nouveau fbest : ", fprimebest)
             fbest = fprimebest
-
         #print(scores)
         population = selectionSurvie(dict, population, T)
 
@@ -77,7 +67,7 @@ def selectionReproduction(dict,population, T_used):
 
     while len(M) < T_used:
         #calcul proba solution prise 
-        solution = population[np.random.randint(0, len(population))] # TODO maybe
+        solution = population[np.random.randint(0, len(population))]
         score_solution = 0
         nonzerosolution = np.nonzero(solution)[0]
         for personne in nonzerosolution:
@@ -120,7 +110,7 @@ def Mutation(Croisement, ProbMutation):
         for i,rnd in enumerate(rand):
             if rnd < ProbMutation:
                 #print(len(solution))
-                solution[i] = not solution[i]
+                solution[i] = 0 if solution[i] else 1
     return Croisement
 
 def Reparation(dict, Croisement): 
@@ -164,9 +154,8 @@ def ReparationV2(dict, Croisement):
     #print("Réparation étape 1")
     for solution in Croisement:
         tableauReparation = CalculScoreReparation(dict, solution)
-        sumTabRep = np.sum(tableauReparation)
 
-        while sumTabRep > 0:
+        while np.sum(tableauReparation) > 0:
             min = float("inf")
             index = -1
             nonZeroTabRep = np.nonzero(tableauReparation)[0]
@@ -176,9 +165,7 @@ def ReparationV2(dict, Croisement):
                     min = valeur
                     index = personne
             solution[index] = 0
-            sumTabRep -= tableauReparation[index]
-            tableauReparation[index] = 0
-        
+            tableauReparation = CalculScoreReparation(dict, solution)
     #print("Reparation étape 2")
     for solution in Croisement:
         if np.count_nonzero(np.array(solution)) == 0:
@@ -197,8 +184,10 @@ def CalculScoreReparation(dict, solution):
     validSolutions = np.nonzero(solution)[0]
     for personne in validSolutions:
         for personne2 in validSolutions:
-            if not dict[personne].relations[personne2]:
-                tableauReparation[personne] += 1
+            if personne != personne2:
+                if not dict[personne].relations[personne2]:
+                    tableauReparation[personne] += 1
+
     return tableauReparation
 
 
