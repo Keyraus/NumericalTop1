@@ -52,7 +52,6 @@ def ag(dict, ProbCroisement, ProbMutation, T, T_used, IterMax):
                 score += dict[personne].weight
             scores.append(score)
         #print("fbest : ", fbest, "fprimebest : ", fprimebest," temps : ", time.time() - start)
-    
         if fprimebest > fbest:
             print("nouveau fbest : ", fprimebest)
             fbest = fprimebest
