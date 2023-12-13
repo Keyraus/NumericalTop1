@@ -26,8 +26,8 @@ pheromone_max = 10.0
 pheromone_min = 0.1
 pheromone_update = 0.1
 pheromone_evaporation = 0.9
-nb_ants = 30
-cycle_max = 1000
+nb_ants = 100
+cycle_max = 10000
 
 
 def init_pheromones(personnes):
@@ -61,7 +61,7 @@ def update_pheromones(pheromones, clique):
     return pheromones
 
 
-def aoc(personnes):
+def aoc(personnes, timeMax = 60):
     start = time.time()
     pheromones = init_pheromones(personnes)
     best_clique = []
@@ -97,7 +97,7 @@ def aoc(personnes):
                 if new_score == 73:
                     return best_clique, best_clique_score
 
-            if time.time() - start > 58:
+            if time.time() - start > timeMax:
                 return best_clique, best_clique_score
 
     return best_clique, best_clique_score
