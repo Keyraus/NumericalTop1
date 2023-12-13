@@ -5,6 +5,7 @@ import time
 from personne_parser import parse
 import numpy as np
 import algo_genetique as ag
+import ant_colony_optimization as aoc
 
 def main():
     if len(sys.argv) != 3:
@@ -19,46 +20,15 @@ def main():
             if "Objective:  z =" in line:
                 result = line.split("Objective:  z = ")[1].split(" ")[0]
                 break
-    chosenOption = input("Choisissez l'option :\n1. Glouton\n2. Algo génétique\n3. Bron-Kerbosch\n4. Tous\n")
-    print("Option choisie : %s" % chosenOption)
+    # result = 1
     print("Résultat de l'instance GLPK : %s" % result)
     actualTime = time.time()
-    if chosenOption == "1":
-        score = glouton.glouton(parse(sys.argv[1]))
-        print("Score : %d" % score)
-    elif chosenOption == "2":
-        print("ToDo")
-    elif chosenOption == "3":
-        ####################################################################################
-        # Utilisation de l'algo de bron-kerbosch
-        # all_clique = glouton.find_all_cliques(possible_node_to_append=parse(sys.argv[1]))
-        # print("Nombre de clique : %d" % len(all_clique))
-        # best_clique = max(all_clique, key=lambda x: sum([i.weight for i in x]))
-        # print(person.id for person in best_clique)
-        # print("Poids de la clique : %d" % sum([i.weight for i in best_clique]))
-        #score2 = ag.intialisation_population(parse(sys.argv[1]), 1000)
-        #print("Score2 : %d" % np.mean(score2))
-        
-        all_clique = glouton.find_all_cliques(possible_node_to_append_to_the_clique=parse(sys.argv[1]))
-        print("Nombre de clique : %d" % len(all_clique))
-        best_clique = max(all_clique, key=lambda x: sum([i.weight for i in x]))
-        print([person.id for person in best_clique])
-        score = sum([i.weight for i in best_clique])
-        print("Poids de la clique : %d" % score)
-    elif chosenOption == "4":
-        score = glouton.glouton(parse(sys.argv[1]))
-        print("Score : %d" % score)
-        score2 = ag.intialisation_population(parse(sys.argv[1]), 1000)
-        print("Score2 : %d" % np.mean(score2))
-        all_clique = glouton.find_all_cliques(possible_node_to_append=parse(sys.argv[1]))
-        print("Nombre de clique : %d" % len(all_clique))
-        best_clique = max(all_clique, key=lambda x: sum([i.weight for i in x]))
-        print(person.id for person in best_clique)
-        print("Poids de la clique : %d" % sum([i.weight for i in best_clique]))
-    else:
-        print("Option invalide")
+    # score = glouton.glouton(parse(sys.argv[1]))
+    # print("Score : %d" % score)
+    clique, score2 = aoc.aoc(parse(sys.argv[1]))
+    print("Score AOC : %d" % score2)
     # print the gap
-    print("Gap : %f" % ((int(result) - score) / int(result)))
+    print("Gap : %f" % ((int(result) - score2) / int(result)))
     print("Temps d'exécution : %f" % (time.time() - actualTime))
 
     
