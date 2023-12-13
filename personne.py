@@ -1,7 +1,5 @@
 # This class is intended to store the information of a person
 import numpy as np
-
-
 class Personne:
     def __init__(self, id, weight, len_dict):
         self.id = int(id)
@@ -30,7 +28,6 @@ class Personne:
                 self.relations.remove(relation)
                 break
         return False
-
 
 class relation:
     def __init__(self, id, weight):
