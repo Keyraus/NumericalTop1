@@ -28,14 +28,14 @@ class Personne:
                 self.relations.remove(relation)
                 break
         return False
-    
+
 class relation:
     def __init__(self, id, weight):
         self.id = int(id)
         self.weight = int(weight)
-    
+
     def __str__(self):
         return "Relation %d (%d)" % (self.id, self.weight)
-    
+
     def __eq__(self, other):
         return self.id == other.id

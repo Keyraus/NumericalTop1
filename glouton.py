@@ -16,12 +16,6 @@ def glouton(personnes):
     score = 0
     for i in S:
         score += i.weight
-        line = "Personne %d (%d) (%d)" % (i.id, i.weight, len(i.relations))
-        for relation in i.relations:
-            line += " %d, " % relation
-        line += "]"
-        #print(line)
-    #print("\nScore : %d" % score)
     return score
 
 def heuristic(C, S):

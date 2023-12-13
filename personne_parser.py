@@ -7,12 +7,9 @@ def parse(file):
     n = 0
     m = 0
     personnes = []
-    
     with open(file, 'r') as f:
-        
         n, m = map(int, f.readline().split())
         for _ in range(n):
-            
             id, weight = map(int, f.readline().split())
             personnes.append(Personne(id, weight, n))
 
@@ -22,5 +19,4 @@ def parse(file):
             personnes[id2].add_relation(personnes[id1])
         for personne in personnes:
             personne.calculate_weight_heur()
-            
     return np.array(personnes)

@@ -3,6 +3,7 @@ import sys
 import time
 from personne_parser import parse
 import algo_genetique as ag
+import ant_colony_optimization as aoc
 import copy
 import numpy as np
 import time
@@ -20,6 +21,13 @@ def main():
             if "Objective:  z =" in line:
                 result = line.split("Objective:  z = ")[1].split(" ")[0]
                 break
+    # result = 1
+    print("Résultat de l'instance GLPK : %s" % result)
+    actualTime = time.time()
+    # score = glouton.glouton(parse(sys.argv[1]))
+    # print("Score : %d" % score)
+    clique, score2 = aoc.aoc(parse(sys.argv[1]))
+    print("Score AOC : %d" % score2)
     # Print the result
     dict = parse(sys.argv[1])
     print("Temps parse : ", time.time() - start)
@@ -75,7 +83,7 @@ def main():
     else:
         print("Option invalide")
     # print the gap
-    print("Gap : %f" % ((int(result) - score) / int(result)))
+    print("Gap : %f" % ((int(result) - score2) / int(result)))
     print("Temps d'exécution : %f" % (time.time() - actualTime))
 
         score = ag.ag(dict, 0.8, 2/len(dict), 400, 100, 500)
