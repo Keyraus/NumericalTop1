@@ -25,7 +25,7 @@ def ag(dict, ProbCroisement, ProbMutation, T, T_used, IterMax):
     for i in range(IterMax):
         #print("Iteration n°", i)
         
-        if time.time() - start > 10:
+        if time.time() - start > 120:
             break
         M = selectionReproduction(dict, population, T_used)
         Croisement = FuncCroisement(M, ProbCroisement)

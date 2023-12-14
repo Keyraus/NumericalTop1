@@ -7,12 +7,13 @@ import numpy as np
 import time
 def main():
     start = time.time()
-    with open(sys.argv[2], 'r') as f:
-        for line in f:
-            if "Objective:  z =" in line:
-                result = line.split("Objective:  z = ")[1].split(" ")[0]
-                break
+    #with open(sys.argv[2], 'r') as f:
+    #    for line in f:
+    #        if "Objective:  z =" in line:
+    #            result = line.split("Objective:  z = ")[1].split(" ")[0]
+    #            break
     # Print the result
+    result = 1
     dict = parse(sys.argv[1])
     print("Temps parse : ", time.time() - start)
     print("Resulat attendu", result)
@@ -23,7 +24,7 @@ def main():
     print("Gap : %.2f" % ((int(result) - score) / int(result)))
     for _ in range(5):
 
-        score = ag.ag(dict, 0.8, 2/len(dict), 400, 100, 500)
+        score = ag.ag(dict, 0.8, 4/len(dict), 400, 200, 500)
         print("Score AG: %d" % score )
         print("Gap : %.2f" % ((int(result) - score) / int(result)))
     
