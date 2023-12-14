@@ -61,7 +61,7 @@ def update_pheromones(pheromones, clique):
     return pheromones
 
 
-def aoc(personnes):
+def aoc(personnes, timeMax = 60):
     start = time.time()
     pheromones = init_pheromones(personnes)
     best_clique = []
@@ -96,9 +96,7 @@ def aoc(personnes):
                 print("New Best Score found : ", new_score, "Itération n°", j, " => ", [p.id for p in clique])
                 best_clique_score = new_score
                 best_clique = clique
-
-            if time.time() - start > 120:
-                # print(pheromones)
+            if time.time() - start > timeMax:
                 return best_clique, best_clique_score
 
     return best_clique, best_clique_score

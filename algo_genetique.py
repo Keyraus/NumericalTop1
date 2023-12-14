@@ -13,7 +13,7 @@ def initialisation_population(dict, T):
     print("temps initialisation population : ", time.time() - start)
     return population
 
-def ag(dict, ProbCroisement, ProbMutation, T, T_used, IterMax):
+def ag(dict, ProbCroisement, ProbMutation, T, T_used, IterMax, timeMax = 60):
     start = time.time()
     #print("Génération de la population...")
     population = initialisation_population(dict, T)
@@ -25,7 +25,7 @@ def ag(dict, ProbCroisement, ProbMutation, T, T_used, IterMax):
     for i in range(IterMax):
         #print("Iteration n°", i)
         
-        if time.time() - start > 10:
+        if time.time() - start > timeMax:
             break
         M = selectionReproduction(dict, population, T_used)
         Croisement = FuncCroisement(M, ProbCroisement)
