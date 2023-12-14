@@ -26,10 +26,11 @@ def main():
         print("Error: time must be a number")
         sys.exit(1)
     isFileResult = False
-    if not os.path.exists(sys.argv[3]):
-        print("Error: file '%s' not found" % sys.argv[3])
-    else:
-        isFileResult = True
+    if len(sys.argv) == 4:
+        if not os.path.exists(sys.argv[3]):
+            print("Error: file '%s' not found" % sys.argv[3])
+        else:
+            isFileResult = True
     if isFileResult:
         with open(sys.argv[3], 'r') as f:
             for line in f:
@@ -102,8 +103,9 @@ def launchAOC(dict, timeMax):
     print("Score AOC : %d" % score)
 
 def launchAG(dict, timeMax):
-    score = ag.ag(dict, 0.8, 2/len(dict), 400, 100, 500, timeMax)
+    score, list = ag.ag(dict, 0.8, 2/len(dict), 400, 100, 500, timeMax)
     print("Score AG: %d" % score)
+    return score, list
 
     
 if __name__ == "__main__":

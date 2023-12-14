@@ -7,9 +7,9 @@ def find_all_cliques(current_clique=[], possible_node_to_append_to_the_clique=[]
     all_cliques = []
     for node in possible_node_to_append_to_the_clique:
         # Find all the nodes that are friends with the current node
-        new_possible_node_to_append = [n for n in possible_node_to_append_to_the_clique if n.is_friend(node)]
+        new_possible_node_to_append = [n for n in possible_node_to_append_to_the_clique if node in np.nonzero(n.relations)[0]]
         # The node is then impossible to append to the clique because it is already in it
-        new_impossible_node_to_append = [n for n in impossible_node_to_append_to_the_clique if n.is_friend(node)]
+        new_impossible_node_to_append = [n for n in impossible_node_to_append_to_the_clique if node in np.nonzero(n.relations)[0]]
 
         # Add the node to the clique
         new_current_clique = current_clique + [node]

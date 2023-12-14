@@ -51,7 +51,7 @@ def ag(dict, ProbCroisement, ProbMutation, T, T_used, IterMax, timeMax = 60):
 
     
     print("nb iteration : ", i)
-    return np.max(scores)
+    return np.max(scores), population[np.argmax(scores)]
 # 9 16 162 197
 def selectionReproduction(dict,population, T_used):
     M = []
