@@ -11,19 +11,21 @@ import numpy as np
 import time
 def main():
     start = time.time()
-    if len(sys.argv) != 3:
+    if len(sys.argv) != 3 and len(sys.argv) != 2:
         print("Usage: python3 main.py instance.txt instance.lp")
         sys.exit(1)
     # check if the instance file exists
     if not os.path.exists(sys.argv[1]):
         print("Error: file '%s' not found" % sys.argv[1])
         sys.exit(1)
-    with open(sys.argv[2], 'r') as f:
-        for line in f:
-            if "Objective:  z =" in line:
-                result = line.split("Objective:  z = ")[1].split(" ")[0]
-                break
-    # result = 1
+    if len(sys.argv) == 3:
+        with open(sys.argv[2], 'r') as f:
+            for line in f:
+                if "Objective:  z =" in line:
+                    result = line.split("Objective:  z = ")[1].split(" ")[0]
+                    break
+    else:
+        result = 1
     print("Résultat de l'instance GLPK : %s" % result)
     actualTime = time.time()
     # score = glouton.glouton(parse(sys.argv[1]))
