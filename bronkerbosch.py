@@ -1,4 +1,6 @@
 import numpy as np
+
+
 # Bron-Kerbosch algorithm
 def find_all_cliques(current_clique=[], possible_node_to_append_to_the_clique=[], impossible_node_to_append_to_the_clique=[]):
     if len(possible_node_to_append_to_the_clique) == 0 and len(impossible_node_to_append_to_the_clique) == 0:
@@ -7,9 +9,9 @@ def find_all_cliques(current_clique=[], possible_node_to_append_to_the_clique=[]
     all_cliques = []
     for node in possible_node_to_append_to_the_clique:
         # Find all the nodes that are friends with the current node
-        new_possible_node_to_append = [n for n in possible_node_to_append_to_the_clique if node in np.nonzero(n.relations)[0]]
+        new_possible_node_to_append = [n for n in possible_node_to_append_to_the_clique if n.relations[node.id] is True]
         # The node is then impossible to append to the clique because it is already in it
-        new_impossible_node_to_append = [n for n in impossible_node_to_append_to_the_clique if node in np.nonzero(n.relations)[0]]
+        new_impossible_node_to_append = [n for n in impossible_node_to_append_to_the_clique if n.relations[node.id] is True]
 
         # Add the node to the clique
         new_current_clique = current_clique + [node]

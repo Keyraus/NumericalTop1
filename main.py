@@ -11,6 +11,7 @@ import sys
 import time
 from personne_parser import parse
 from debuggerAlgorithms import launchAG
+from bronkerbosch import find_all_cliques
 
 def main():
     if len(sys.argv) < 4:
@@ -25,7 +26,7 @@ def main():
     if not os.path.exists(sys.argv[2]):
         print("Error: file '%s' not found" % sys.argv[2])
         sys.exit(1)
-    # check if the output file exists
+    check if the output file exists
     if os.path.exists(sys.argv[3]):
         print("Error: file '%s' already exists" % sys.argv[3])
         sys.exit(1)
@@ -34,6 +35,12 @@ def main():
     dict = parse(sys.argv[2])
     # launch the algorithm
     timeAfterParsing = time.time()
+    # all_cliques = find_all_cliques(possible_node_to_append_to_the_clique=dict)
+    # best_clique = max(all_cliques, key=lambda x: sum([i.weight for i in x]))
+    # print([person.id for person in best_clique])
+    # score = sum([i.weight for i in best_clique])
+    # print("Poids de la clique : %d" % score)
+    # print("Temps : ", time.time() - startTime)
     score, scoreArray = launchAG(dict, timeMax - (timeAfterParsing - startTime))
     print(scoreArray)
     line = ""
