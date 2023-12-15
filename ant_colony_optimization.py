@@ -68,9 +68,10 @@ def aoc(personnes, timeMax = 60):
     best_clique_score = 0
     # print(pheromones, len(pheromones))
     for j in range(cycle_max):
+        pheromones = init_pheromones(personnes)
         for ant in range(nb_ants):
             clique = []
-            person = select_random_vertex(personnes)
+            person = select_random_vertex(personnes)q
             # print(person)
             clique.append(person)
             candidates = [relation for relation in person.relations]

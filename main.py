@@ -9,8 +9,9 @@ import ant_colony_optimization as aoc
 import copy
 import numpy as np
 import time
+
+
 def main():
-    start = time.time()
     if len(sys.argv) != 3 and len(sys.argv) != 2:
         print("Usage: python3 main.py instance.txt instance.lp")
         sys.exit(1)
@@ -42,10 +43,6 @@ def main():
     print("Minimum : ", np.min(scores))
     print("Moyenne : ", np.mean(scores))
     print("Maximum : ", np.max(scores))
-
-    score = ag.ag(dict, 0.8, 2/len(dict), 400, 100, 500)
-    print("Score AG: %d" % score )
-    print("Gap : %.2f" % ((int(result) - score) / int(result)))
     
 if __name__ == "__main__":
     main()
