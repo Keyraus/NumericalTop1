@@ -6,7 +6,7 @@ from glouton import heuristicV2
 def initialisation_population(dict, T):
     start = time.time()
     population = []
-    population.append(glouton.gloutonV2(dict, True, 0))
+    population.append(glouton.gloutonV2(dict, True))
     for _ in range(T - 1):
         res = glouton.gloutonV2(dict, True, True)
         population.append(res)
@@ -87,14 +87,26 @@ def FuncCroisement(M, ProbCroisement):
         i = M[np.random.randint(0, len(M))]
         j = M[np.random.randint(0, len(M))]
         if prise < ProbCroisement:
-            point_croisement = int(len(i) / 2)
-            i1 = i[:point_croisement]
-            i2 = i[point_croisement:]
-            j1 = j[:point_croisement]
-            j2 = j[point_croisement:]
-
-            i = i1 + j2
-            j = j1 + i2
+            point_croisement = []
+            for _ in range(np.random.randint(2,5)):
+                point_croisement.append(np.random.randint(0, len(i)))
+            point_croisement = sorted(point_croisement)
+            #print(point_croisement)
+            #print("i : ", i)
+            #print("j : ", j)
+            # get all the parts of i and j between the points of croisement
+            parted_i = np.split(i, point_croisement)
+            parted_j = np.split(j, point_croisement)
+            # put parts of i and j in i and j
+            i = parted_i[0]
+            j = parted_j[0]
+            for index in range(1, len(parted_i)):
+                if index % 2 == 0:
+                    i = np.append(i, parted_i[index])
+                    j = np.append(j, parted_j[index])
+                else:
+                    i = np.append(i, parted_j[index])
+                    j = np.append(j, parted_i[index])
         
         Croisement.append(i)
         Croisement.append(j)
