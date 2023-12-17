@@ -26,7 +26,7 @@ def main():
     if not os.path.exists(sys.argv[2]):
         print("Error: file '%s' not found" % sys.argv[2])
         sys.exit(1)
-    check if the output file exists
+    # check if the output file exists
     if os.path.exists(sys.argv[3]):
         print("Error: file '%s' already exists" % sys.argv[3])
         sys.exit(1)
