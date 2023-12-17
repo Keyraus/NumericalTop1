@@ -71,7 +71,7 @@ def aoc(personnes, timeMax = 60):
         pheromones = init_pheromones(personnes)
         for ant in range(nb_ants):
             clique = []
-            person = select_random_vertex(personnes)q
+            person = select_random_vertex(personnes)
             # print(person)
             clique.append(person)
             candidates = [relation for relation in person.relations]
