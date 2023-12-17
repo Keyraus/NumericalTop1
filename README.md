@@ -58,7 +58,7 @@ The results of the glpk ran on the graphs are in the folder "results".
 A word document containing the researchs exists somewhere over the rainbow.
 
 ## Contributors
-- [Cédric MARTY]()
-- [Bastien TAROT]()
-- [Guénaël LE ROUX]()
-- [Antonin AUBERT]()
+- [Cédric MARTY](https://github.com/Keyraus)
+- [Bastien TAROT](https://github.com/Suna24)
+- [Guénaël LE ROUX](https://github.com/guenael-lr)
+- [Antonin AUBERT](https://github.com/Grizfreak)
