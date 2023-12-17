@@ -2,7 +2,6 @@
 
 import sys
 import os
-from personne import Personne
 from personne_parser import parse
 
 def convertion(personnes, output):
@@ -15,6 +14,7 @@ def convertion(personnes, output):
         # Write the objective function
         f.write("Maximize\n")
         f.write("    z: ")
+        # The objective function is the sum of the weights of the people invited
         for personne in personnes:
             f.write("+ %d x%d " % (personne.weight, personne.id))
         f.write("\n")
@@ -23,25 +23,25 @@ def convertion(personnes, output):
         f.write("Subject To\n")
         # This type of constraint : forall {j in 1..N, i in 1..N: i != j} (x[i] + x[j] <= 1) -> (i, j) out of E
         
-        for personne in personnes:
+        # Write the constraint for each person
+        for person in personnes: 
             contraintePersonne = 0
             contraintesStr = ""
-            for personne2 in personnes:
-                if personne.id != personne2.id:
-                    # We will write the constraint only if the two people are not friends
-                    if not personne.is_friend(personne2):
-                        if personne.id < personne2.id:
-                            contraintePersonne += 1
-                            contraintesStr += "+ x%d " % personne2.id
+            # For each person, we check if he knows each other person
+            for person2 in personnes:
+                # We don't want to check twice the same relation
+                if person.id < person2.id:
+                    # If he not knows the person, we add the constraint
+                    if not person.relations[person2.id]:
+                        # We add the constraint
+                        contraintePersonne += 1
+                        contraintesStr += "+ x%d " % person2.id
             if contraintePersonne == 0:
                 continue
             nb_constraints += 1
-            contraintesStr = "    c%d: %d x%d %s  <= %d\n" % (nb_constraints,contraintePersonne, personne.id, contraintesStr, contraintePersonne)
+            contraintesStr = "    c%d: %d x%d %s  <= %d\n" % (nb_constraints,contraintePersonne, person.id, contraintesStr, contraintePersonne)
             f.write(contraintesStr)
-            
 
-        # For the constraint we will write a c : at each new line
-        # TODO
         # Write the binaries variables
         f.write("Binaries\n")
         for personne in personnes:
