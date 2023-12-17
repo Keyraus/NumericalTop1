@@ -15,7 +15,8 @@ To install the project, you need to clone the repository and install the require
 The project is also available on [GitHub](https://github.com/Keyraus/NumericalTop1), as a project or a release. ([Link to the release](https://github.com/Keyraus/NumericalTop1/releases))
 
 ## Usage
-Each file contains methods associated with the name of it
+Each file contains methods associated with their name.
+
 The only launchable files are :
 - convertion.py
 - debuggerAlgorithms.py
@@ -46,16 +47,16 @@ The time limit is used to stop the algorithm if it is too long. The output file 
 
 ## Implemented algorithms
 ### Greedy
-The greedy algorithm is a simple algorithm that will take the first vertex of the graph and add it to the clique. Then, it will take the vertex with the most edges with the clique and add it to the clique. It will repeat this process until there is no more vertex to add to the clique.
+The greedy algorithm is a simple algorithm that will take the first powerfull (its weight by the number of relations he has)vertex of the graph and add it to the clique. Then, it will take the next vertex most powerfull that knows everybody in the clique and add it to the clique. It will repeat this process until there is no more vertex to add to the clique.
 ### Genetic
-The genetic algorithm is an algorithm that will create a population of clique. Then, it will select the best clique of the population and create a new population with it. It will repeat this process until the time limit is reached.
+The genetic algorithm is an algorithm that will create a population of clique. Then, it will select the best clique of the population and create a new population from it by doing multiple thing like mutation. It will repeat this process until the time limit is reached.
 ### Ant Colony Optimization
 The ant colony optimization algorithm is an algorithm that will create a population of clique. Then, it will select the best clique of the population and create a new population with it. It will repeat this process until the time limit is reached.
 ### Bron-Kerbosch algorithm
-The Bron-Kerbosch algorithm is an algorithm that will create a population of clique. Then, it will select the best clique of the population and create a new population with it. It will repeat this process until the time limit is reached.
+The Bron-Kerbosch algorithm is an algorithm that will create a population of clique. Then, it will select the best clique of the population and create a new population with it. 
 
 ## Results
-The results of the glpk ran on the graphs are in the folder "results".
+The results of the glpk ran on the graphs are in the folder "Solutions". The results of the glpk are not present in the release of the GitHub repository because of the size of the files.
 
 A word document containing the researchs exists somewhere over the rainbow.
 
