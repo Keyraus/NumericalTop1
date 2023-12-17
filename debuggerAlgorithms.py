@@ -1,19 +1,18 @@
 # This program is intended to debug all the algorithms created for the project, several options are available for the user to choose from
 # It takes in argument the instance file and the result file of the GLPK solver (not necessary but useful to compare the results)
-import glouton
+import greedy
 import sys
 import time
 from personne_parser import parse
-import algo_genetique as ag
-import ant_colony_optimization as aoc
+import genetics as ag
+import ant_colony_optimization as aco
 import os
-import numpy as np
 import time
 import bronkerbosch as bk
 def main():
     start = time.time()
     if len(sys.argv) != 3 and len(sys.argv) != 4:
-        print("Usage: python3 main.py instance.txt temps_en_secondes instance.lp")
+        print("Usage: python3 debuggerAlgorithms.py instance.txt temps_en_secondes instance.lp")
         sys.exit(1)
     # check if the instance file exists
     if not os.path.exists(sys.argv[1]):
@@ -44,10 +43,11 @@ def main():
     dict = parse(sys.argv[1])
     print("Temps de parsing : %f" % (time.time() - actualTime))
     isRunning = True
+    # Main loop
     while(isRunning):
         print("1. Lancer l'algorithme glouton")
         print("2. Lancer l'algorithme Bron-Kerbosch")
-        print("3. Lancer l'algorithme AOC")
+        print("3. Lancer l'algorithme ACO")
         print("4. Lancer l'algorithme AG")
         print("5. Lancer tous les algorithmes à la suite")
         print("6. Quitter")
@@ -62,7 +62,7 @@ def main():
             launchBronKerbosch(dict)
             print("Temps d'exécution : %f" % (time.time() - actualTime))
         elif choice == "3":
-            launchAOC(dict, timeMax)
+            launchACO(dict, timeMax)
             print("Temps d'exécution : %f" % (time.time() - actualTime))
         elif choice == "4":
             launchAG(dict, timeMax)
@@ -72,7 +72,7 @@ def main():
             print("Temps d'exécution : %f" % (time.time() - actualTime))
             scoreBronKerbosch = launchBronKerbosch(dict)
             print("Temps d'exécution : %f" % (time.time() - actualTime))
-            scoreAOC = launchAOC(dict, timeMax)
+            scoreaco = launchACO(dict, timeMax)
             print("Temps d'exécution : %f" % (time.time() - actualTime))
             scoreAG = launchAG(dict, timeMax)
             print("Temps d'exécution : %f" % (time.time() - actualTime))
@@ -80,7 +80,7 @@ def main():
                 print("Résultat de l'instance GLPK : %s" % result)
             print("Score glouton : %d" % scoreGlouton)
             print("Score Bron-Kerbosch : %d" % scoreBronKerbosch)
-            print("Score AOC : %d" % scoreAOC)
+            print("Score ACO : %d" % scoreaco)
             print("Score AG : %d" % scoreAG)
         elif choice == "6":
             isRunning = False
@@ -88,22 +88,26 @@ def main():
             print("Choix invalide")
 
 def launchGlouton(dict):
-    score = glouton.gloutonV2(dict)
+    score = greedy.greedy(dict)
     print("Score : %d" % score)
     return score
 
 def launchBronKerbosch(dict):
-    max_clique = bk.find_maximum_clique(possible_node_to_append_to_the_clique=parse(sys.argv[1]))
+    max_clique = bk.find_all_cliques(possible_node_to_append_to_the_clique=parse(sys.argv[1]))
+    # get max clique
+    max_clique = max(max_clique, key=lambda x: sum([i.weight for i in x]))
     print([person.id for person in max_clique])
     score = sum([i.weight for i in max_clique])
     print("Poids de la clique : %d" % score)
+    return score
 
-def launchAOC(dict, timeMax):
-    clique, score = aoc.aoc(dict, timeMax)
-    print("Score AOC : %d" % score)
+def launchACO(dict, timeMax):
+    clique, score = aco.aco(dict, timeMax)
+    print("Score ACO : %d" % score)
+    return score
 
 def launchAG(dict, timeMax):
-    score, list = ag.ag(dict, 0.8, 2/len(dict), 400, 100, 500, timeMax)
+    score, list = ag.ag(dict, 0.8, 2/len(dict), 400, 100, 10000, timeMax)
     print("Score AG: %d" % score)
     return score, list
 

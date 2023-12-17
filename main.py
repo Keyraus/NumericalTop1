@@ -11,7 +11,6 @@ import sys
 import time
 from personne_parser import parse
 from debuggerAlgorithms import launchAG
-from bronkerbosch import find_all_cliques
 
 def main():
     if len(sys.argv) < 4:
@@ -35,18 +34,12 @@ def main():
     dict = parse(sys.argv[2])
     # launch the algorithm
     timeAfterParsing = time.time()
-    # all_cliques = find_all_cliques(possible_node_to_append_to_the_clique=dict)
-    # best_clique = max(all_cliques, key=lambda x: sum([i.weight for i in x]))
-    # print([person.id for person in best_clique])
-    # score = sum([i.weight for i in best_clique])
-    # print("Poids de la clique : %d" % score)
-    # print("Temps : ", time.time() - startTime)
     score, scoreArray = launchAG(dict, timeMax - (timeAfterParsing - startTime))
-    print(scoreArray)
+    #print(scoreArray)
     line = ""
     for i in scoreArray:
         line += str(i) + " "
-    print(line)
+    #print(line)
     # write in the file
     with open(sys.argv[3], 'w') as f:
         f.write(line)
