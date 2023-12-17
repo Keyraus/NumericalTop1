@@ -12,6 +12,8 @@ This project has been created for the course of Numerical In Python at the ESIEA
 ## Installation
 To install the project, you need to clone the repository and install the requirements (glpk, python3)
 
+The project is also available on [GitHub](https://github.com/Keyraus/NumericalTop1), as a project or a release. ([Link to the release](https://github.com/Keyraus/NumericalTop1/releases))
+
 ## Usage
 Each file contains methods associated with the name of it
 The only launchable files are :
